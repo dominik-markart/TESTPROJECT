@@ -26,7 +26,7 @@ public class TestTest {
   JavascriptExecutor js;
   @BeforeEach
   public void setUp() {
-    System.setProperty("webdriver.chrome.driver","$JENKINS_HOME\\tools\\chromedriver\\chromedrive.exe");
+    System.setProperty("webdriver.chrome.driver","../../tools/chromedriver/chromedriver.exe");
     driver = new ChromeDriver();
     js = (JavascriptExecutor) driver;
     vars = new HashMap<String, Object>();
