@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -32,9 +33,14 @@ public class TestTest {
 
     @BeforeEach
     public void setUp() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--no-sandbox");
+        options.addArguments("--headless"); //!!!should be enabled for Jenkins
+        options.addArguments("--disable-dev-shm-usage"); //!!!should be enabled for Jenkins
+        options.addArguments("--window-size=1920x1080");
         WebDriverManager.chromedriver().setup();
 
-        driver = new ChromeDriver();
+        driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(5000));
 
         js = (JavascriptExecutor) driver;
