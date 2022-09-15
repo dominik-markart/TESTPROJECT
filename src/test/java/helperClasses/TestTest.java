@@ -35,16 +35,17 @@ public class TestTest {
   @BeforeEach
   public void setUp() {
     ChromeOptions options = new ChromeOptions();
-    options.addArguments("--no-sandbox");
+    //options.addArguments("--no-sandbox");
     //options.addArguments("--headless"); //!!!should be enabled for Jenkins
-    options.addArguments("--disable-dev-shm-usage"); //!!!should be enabled for Jenkins
-    options.addArguments("--window-size=1920x1080")
-            .addArguments("allow-file-access-from-files")
-            .addArguments("use-fake-device-for-media-stream")
-            .addArguments("use-fake-ui-for-media-stream");
+    //options.addArguments("--disable-dev-shm-usage")//!!!should be enabled for Jenkins
+            options.addArguments("--use-fake-ui-for-media-stream");
+            options.addArguments("--use-fake-device-for-media-stream");
+
+
+
     WebDriverManager.chromedriver().setup();
 
-    driver = new ChromeDriver();
+    driver = new ChromeDriver(options);
     driver.manage().timeouts().implicitlyWait(Duration.ofMillis(5000));
 
     js = (JavascriptExecutor) driver;
@@ -81,9 +82,19 @@ public class TestTest {
     driver.findElement(By.id("passwordField")).sendKeys(Keys.ENTER);
     // 7 | click | css=#B_mjIr0UAlUMg9x2yHmUdA .myhome-room-meetme-button |
     driver.findElement(By.cssSelector("#B_mjIr0UAlUMg9x2yHmUdA .myhome-room-meetme-button")).click();
+    try {
+      Thread.sleep(2000);
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    }
     // 8 | click | css=#audio-popup-webcall-webcam-button span |
     driver.findElement(By.cssSelector("#audio-popup-webcall-webcam-button span")).click();
     // 9 | click | css=.icon-icon_exit |
+    try {
+      Thread.sleep(5000);
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    }
     driver.findElement(By.cssSelector(".icon-icon_exit")).click();
     // 10 | click | css=#exit-meeting .backCol6h |
     driver.findElement(By.cssSelector("#exit-meeting .backCol6h")).click();
